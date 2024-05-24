@@ -1,6 +1,6 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-interface IUser {
+interface IUser extends Document{
   name: string;
   email: string;
   password: string;
@@ -25,7 +25,7 @@ const userSchema = new Schema<IUser>({
 
 const User = model<IUser>("User", userSchema);
 
-interface IExpenses {
+interface IExpenses extends Document{
   userId: Types.ObjectId;
   dateCreated: Date;
   category: string;
@@ -47,7 +47,7 @@ const expensesSchema = new Schema<IExpenses>({
 
 const Expenses = model<IExpenses>("Expenses", expensesSchema);
 
-interface ILoans {
+interface ILoans extends Document{
   userId: Types.ObjectId;
   dateTaken: Date;
   expectedDateOfPayment: Date;
@@ -75,7 +75,7 @@ const loansSchema = new Schema<ILoans>({
 
 const Loans = model<ILoans>("Loans", loansSchema);
 
-interface IPaymentMethod {
+interface IPaymentMethod extends Document{
   userId: Types.ObjectId;
   type: string; // e.g., Credit Card, Bank Transfer
   details: string; // e.g., Card number (masked), Bank account
@@ -94,7 +94,7 @@ const PaymentMethod = model<IPaymentMethod>(
   paymentMethodSchema
 );
 
-interface IRecurringPayment {
+interface IRecurringPayment extends Document{
   userId: Types.ObjectId;
   expenseId: Types.ObjectId;
   frequency: string; // e.g., Monthly, Yearly
@@ -112,3 +112,7 @@ const RecurringPayment = model<IRecurringPayment>(
   "RecurringPayment",
   recurringPaymentSchema
 );
+
+type ModelInterface = ILoans | IUser | IExpenses
+
+export { User, Expenses, Loans, PaymentMethod, RecurringPayment, ModelInterface};
