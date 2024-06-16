@@ -1,7 +1,7 @@
 // db.ts
 
 import mongoose from "mongoose";
-import { User, Loans, Expenses, ModelInterface } from '../models/models';
+import {ModelInterface } from '../models/models';
 
 const connectToDatabase = async (): Promise<void> => {
   try {
@@ -13,6 +13,13 @@ const connectToDatabase = async (): Promise<void> => {
   }
 };
 
+/**
+ * Saves the model data to the database.
+ * 
+ * @param modelData - The model data to be saved.
+ * @returns A Promise that resolves to void.
+ * @throws If there is an error saving the data.
+ */
 const saveModelData = async (modelData: ModelInterface): Promise<void> => {
   try {
     await modelData.save();
@@ -23,5 +30,4 @@ const saveModelData = async (modelData: ModelInterface): Promise<void> => {
   }
 };
 
-
-export { connectToDatabase, saveModelData, User, Loans, Expenses };
+export {connectToDatabase, saveModelData}
