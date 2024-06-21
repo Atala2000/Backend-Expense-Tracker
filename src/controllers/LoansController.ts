@@ -4,12 +4,12 @@ import { saveModelData } from "../services/db.service";
 import { Types } from "mongoose";
 
 /**
- * Creates a new expense.
+ * Creates a new loan.
  *
- * @param req - The request object containing the expense data.
+ * @param req - The request object containing the loan data.
  * @param res - The response object used to send the HTTP response.
  */
-export const createExpense = (req: Request, res: Response) => {
+export const createLoan = (req: Request, res: Response) => {
   const { userId, dateTaken, expectedDateOfPayment, datePaid, paymentMethod, interest, expectedAmount, actualAmountPaid, status, lender, notes } =
     req.body;
 
@@ -43,7 +43,7 @@ export const createExpense = (req: Request, res: Response) => {
  * @param res - The response object.
  * @returns A response indicating the result of the operation.
  */
-const findExpense = async (req: Request, res: Response) => {
+const findLoan = async (req: Request, res: Response) => {
   const { loanID } = req.params;
 
   if (!loanID) {
@@ -53,7 +53,7 @@ const findExpense = async (req: Request, res: Response) => {
         const result = await Loans.findById(loanID);
 
         if (!result) {
-            return res.send(404).send("Expense not found");
+            return res.send(404).send("Loan not found");
         }
 
         return res.send(200).send({result})
@@ -63,11 +63,11 @@ const findExpense = async (req: Request, res: Response) => {
 };
 
 /**
- * Deletes an expense by its ID.
+ * Deletes an Loan by its ID.
  * @param {Request} req - The request object.
  * @param {Response} res - The response object.
  */
-const deleteExpense = (req: Request, res: Response) => {
+const deleteLoan = (req: Request, res: Response) => {
   const { loanID } = req.params;
 
   if (!loanID) {
@@ -76,7 +76,7 @@ const deleteExpense = (req: Request, res: Response) => {
 
   try {
     Loans.findByIdAndDelete(loanID);
-    return res.status(200).send("Expense successfully deleted")
+    return res.status(200).send("Loan successfully deleted")
   } catch (err) {
     console.log(err)
       return res.status(500).send("Internal server error")
@@ -86,13 +86,13 @@ const deleteExpense = (req: Request, res: Response) => {
 
 
 /**
- * Updates an expense in the database.
+ * Updates an laon in the database.
  * 
  * @param {Request} req - The request object.
  * @param {Response} res - The response object.
- * @returns {Promise<void>} - A promise that resolves when the expense is updated.
+ * @returns {Promise<void>} - A promise that resolves when the loan is updated.
  */
-const updateExpense = async (req: Request, res: Response): Promise<Response> => {
+const updateLoan = async (req: Request, res: Response): Promise<Response> => {
   const { loanID } = req.params;
   const updateData = req.body;
 
