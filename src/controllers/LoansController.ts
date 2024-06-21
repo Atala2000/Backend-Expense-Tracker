@@ -10,25 +10,29 @@ import { Types } from "mongoose";
  * @param res - The response object used to send the HTTP response.
  */
 export const createExpense = (req: Request, res: Response) => {
-  const { userId, dateTaken, amount, expectedDateOfPayment, datePaid, paymentMethod, interest, expectedAmount, actualAmountPaid, status, lender, notes } =
+  const { userId, dateTaken, expectedDateOfPayment, datePaid, paymentMethod, interest, expectedAmount, actualAmountPaid, status, lender, notes } =
     req.body;
 
-  // Basic validation
-  if (!userId || !category || typeof amount !== "number") {
-    return res.status(400).send("Invalid input data");
-  }
-
-  const expense = new Loans({
+  const loan = new Loans({
     userId,
-
+    dateTaken,
+    expectedDateOfPayment,
+    datePaid,
+    paymentMethod,
+    interest,
+    expectedAmount,
+    actualAmountPaid,
+    status,
+    lender,
+    notes
   });
 
-  saveModelData(expense)
+  saveModelData(loan)
     .then(() => {
-      res.status(201).send("Expense created successfully");
+      res.status(201).send("Loan created successfully");
     })
     .catch((error) => {
-      res.status(500).send(`Error creating expense: ${error.message}`);
+      res.status(500).send(`Error creating Loan: ${error.message}`);
     });
 };
 
@@ -40,13 +44,13 @@ export const createExpense = (req: Request, res: Response) => {
  * @returns A response indicating the result of the operation.
  */
 const findExpense = async (req: Request, res: Response) => {
-  const { expenseId } = req.params;
+  const { loanID } = req.params;
 
-  if (!expenseId) {
-    return res.status(400).send("Expense ID is required");
+  if (!loanID) {
+    return res.status(400).send("Loan ID is required");
   }
     try {
-        const result = await Loans.findById(expenseId);
+        const result = await Loans.findById(loanID);
 
         if (!result) {
             return res.send(404).send("Expense not found");
@@ -64,14 +68,14 @@ const findExpense = async (req: Request, res: Response) => {
  * @param {Response} res - The response object.
  */
 const deleteExpense = (req: Request, res: Response) => {
-  const { expenseId } = req.params;
+  const { loanID } = req.params;
 
-  if (!expenseId) {
+  if (!loanID) {
     return res.status(400).send("Expense ID is required");
   }
 
   try {
-    Loans.findByIdAndDelete(expenseId);
+    Loans.findByIdAndDelete(loanID);
     return res.status(200).send("Expense successfully deleted")
   } catch (err) {
     console.log(err)
@@ -89,30 +93,30 @@ const deleteExpense = (req: Request, res: Response) => {
  * @returns {Promise<void>} - A promise that resolves when the expense is updated.
  */
 const updateExpense = async (req: Request, res: Response): Promise<Response> => {
-  const { expenseId } = req.params;
+  const { loanID } = req.params;
   const updateData = req.body;
 
-  if (!expenseId) {
-    return res.status(400).send("Expense ID is required");
+  if (!loanID) {
+    return res.status(400).send("Loan ID is required");
   }
 
-  if (!Types.ObjectId.isValid(expenseId)) {
-    return res.status(400).send("Invalid Expense ID format");
+  if (!Types.ObjectId.isValid(loanID)) {
+    return res.status(400).send("Invalid Loan ID format");
   }
 
   try {
-    const result = await Loans.findByIdAndUpdate(expenseId, updateData, {
+    const result = await Loans.findByIdAndUpdate(loanID, updateData, {
       new: true,
       runValidators: true,
     });
 
     if (!result) {
-      return res.status(400).send("Expense not found")
+      return res.status(400).send("Loan not found")
     }
 
     return res.status(200).send({result})
   } catch (err) {
-    console.error(`Error updating expense: ${err}`)
+    console.error(`Error updating loan: ${err}`)
     return res.status(500).send("Internal server error")
   }
 }
