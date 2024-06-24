@@ -43,7 +43,7 @@ export const createLoan = (req: Request, res: Response) => {
  * @param res - The response object.
  * @returns A response indicating the result of the operation.
  */
-const findLoan = async (req: Request, res: Response) => {
+export const findLoan = async (req: Request, res: Response) => {
   const { loanID } = req.params;
 
   if (!loanID) {
@@ -67,7 +67,7 @@ const findLoan = async (req: Request, res: Response) => {
  * @param {Request} req - The request object.
  * @param {Response} res - The response object.
  */
-const deleteLoan = (req: Request, res: Response) => {
+export const deleteLoan = (req: Request, res: Response) => {
   const { loanID } = req.params;
 
   if (!loanID) {
@@ -92,7 +92,7 @@ const deleteLoan = (req: Request, res: Response) => {
  * @param {Response} res - The response object.
  * @returns {Promise<void>} - A promise that resolves when the loan is updated.
  */
-const updateLoan = async (req: Request, res: Response): Promise<Response> => {
+export const updateLoan = async (req: Request, res: Response): Promise<Response> => {
   const { loanID } = req.params;
   const updateData = req.body;
 
