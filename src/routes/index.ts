@@ -1,9 +1,12 @@
+// routes.ts
+
 import {
   createExpense,
   findExpense,
   deleteExpense,
   updateExpense,
 } from "../controllers/ExpenseController";
+
 import {
   createLoan,
   findLoan,
@@ -11,7 +14,8 @@ import {
   updateLoan,
 } from "../controllers/LoansController";
 
-const express = require("express");
+import express from "express";
+
 const router = express.Router();
 
 // Routes for expenses
@@ -22,6 +26,12 @@ router.put("/expense/:expenseId/delete", deleteExpense);
 
 // Routes for loans
 router.post("/loan", createLoan);
-router.get("/loan/:expenseId", findLoan);
+router.get("/loan/:loanId", findLoan); // Changed the parameter to loanId for consistency
 router.put("/loan/:loanId", updateLoan);
 router.put("/loan/:loanId/delete", deleteLoan);
+
+router.get("/test", (req, res) => {
+  res.send("Test route is working!");
+});
+
+export default router;
