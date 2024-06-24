@@ -43,7 +43,7 @@ export const createExpense = (req: Request, res: Response) => {
  * @param res - The response object.
  * @returns A response indicating the result of the operation.
  */
-const findExpense = async (req: Request, res: Response) => {
+export const findExpense = async (req: Request, res: Response) => {
   const { expenseId } = req.params;
 
   if (!expenseId) {
@@ -67,7 +67,7 @@ const findExpense = async (req: Request, res: Response) => {
  * @param {Request} req - The request object.
  * @param {Response} res - The response object.
  */
-const deleteExpense = (req: Request, res: Response) => {
+export const deleteExpense = (req: Request, res: Response) => {
   const { expenseId } = req.params;
 
   if (!expenseId) {
@@ -92,7 +92,7 @@ const deleteExpense = (req: Request, res: Response) => {
  * @param {Response} res - The response object.
  * @returns {Promise<void>} - A promise that resolves when the expense is updated.
  */
-const updateExpense = async (req: Request, res: Response): Promise<Response> => {
+export const updateExpense = async (req: Request, res: Response): Promise<Response> => {
   const { expenseId } = req.params;
   const updateData = req.body;
 
