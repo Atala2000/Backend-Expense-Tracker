@@ -2,10 +2,14 @@
 
 import mongoose from "mongoose";
 import {ModelInterface } from '../models/models';
+import dotenv from "dotenv"
+import process from "process";
+
+dotenv.config();
 
 const connectToDatabase = async (): Promise<void> => {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/test");
+    await mongoose.connect(`${process.env.DATABASE_URL}`);
     console.log("Successfully connected to the database");
   } catch (error) {
     console.error("Error connecting to the database", error);
@@ -30,4 +34,6 @@ const saveModelData = async (modelData: ModelInterface): Promise<void> => {
   }
 };
 
+
 export {connectToDatabase, saveModelData}
+
